@@ -1,7 +1,5 @@
-#This is the quickest way I can update individual elements in an array.
+#This is the easiest way I know to update individual elements in an array.
 #I know this is old school, please enlighten me.
-
-from tqdm import tqdm  #loading bar function
 
 test1 = [[[1, 2, 3], [1, 2, 3], [1, 2, 3]]]
 test2 = [[[1, 2, 3], [1, 2, 3], [1, 2, 3]]]
