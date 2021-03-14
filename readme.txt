@@ -20,4 +20,4 @@ Notes:
    * 500 rule = 500 / focal length. The result is about as much time you have before the stars start moving within the frame.
 
 - You can replace the sample images with your own in ./stack, ensure that they are from 1 set of images. Do not add any other directories here or any other kind of files.
-- All images in stack dir should be the same demensions.
+- All images in stack dir should be the same dimensions.
