@@ -1,11 +1,13 @@
 from os import listdir
 import subprocess
 
-import numpy
+import numpy as np
 from tqdm import tqdm  #loading bar function
 from simplejpeg import decode_jpeg_header
 from simplejpeg import decode_jpeg
 from simplejpeg import encode_jpeg
+
+from temp import add_channels
 
 #Gathering file names from ./stack and storing them in a list/array.
 file_list = listdir('./stack')
@@ -24,19 +26,11 @@ with open('./stack/' + file_names[0], 'rb') as image:
     rows = range(header_info[0])
     pixels_per_row = range(header_info[1])
 
-result_image = []  #A blank image that will eventually become our result image.
-
-#Filling image with rows.
-print()
-print("Generating a blank image with the demensions of your image stack...")
-for row in tqdm(rows):
-    result_image.append([])
-
-    #Filling pixel values per row.
-    for pixel in pixels_per_row:
-        #Pixel values are set to 0 so we can add other values to them later.
-        result_image[row].append([0, 0, 0])
-
+#Generating a result image array...
+#header_info[0] = Number of rows. (aka height)
+#header_info[1] = Number of pixels / row.
+#3 = channels per pixel.
+result_image = np.zeros([header_info[0], header_info[1], 3], dtype='uint8')
 print()
 
 #Opening each file and adding their values to the result_image list/array.
@@ -68,20 +62,13 @@ for file in tqdm(file_names):
         #TO DO:
         #MAKE THIS A NUMPY ARRAY, IT'S A GAZILLIION TIMES FASTER!
         #DO IT FOR REAL, JESUS CHRIST YOU'RE DUMB FOR DOING IT THIS WAY.
+        print("DIAGNOSTICS HAPPENING HERE")
+        for row in tqdm(current_image):
+            for pixel in row:
+                for channel in pixel:
+                    result_image[channel] = add_channels(
+                        result_image[channel], current_image[channel])
 
-        row = 0
-        while row < len(current_image):
-            pixel = 0
-            #print(f"Added row {row} to result image...")
-            while pixel < len(current_image[row]):
-                channel = 0
-                while channel < len(current_image[row][pixel]):
-                    result_image[row][pixel][channel] = result_image[row][
-                        pixel][channel] + current_image[row][pixel][channel]
-
-                    channel += 1
-                pixel += 1
-            row += 1
 print()
 
 #Iterating over every row to divide the pixel values by the number of files.
