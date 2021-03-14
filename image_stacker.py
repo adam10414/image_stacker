@@ -101,8 +101,6 @@ while row < len(result_image):
         pixel += 1
     row += 1
 
-result_image = numpy.array(result_image, dtype='uint8')
-
 with open('./output.jpg', 'wb') as image:
     data = encode_jpeg(result_image, 100)
     image.write(data)
