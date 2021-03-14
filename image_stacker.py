@@ -1,6 +1,5 @@
 from os import listdir
 import subprocess
-import subprocess
 
 import numpy
 from tqdm import tqdm  #loading bar function
@@ -42,6 +41,7 @@ print()
 
 #Opening each file and adding their values to the result_image list/array.
 print("Adding the stack to our base image...")
+
 #Something is taking a long time here, and I don't know what...
 #Perhaps memory being re-allocated?
 for file in tqdm(file_names):
@@ -64,6 +64,11 @@ for file in tqdm(file_names):
         """
 
         #I know this is gross, but I need/want something quick and dirty to see a result.
+
+        #TO DO:
+        #MAKE THIS A NUMPY ARRAY, IT'S A GAZILLIION TIMES FASTER!
+        #DO IT FOR REAL, JESUS CHRIST YOU'RE DUMB FOR DOING IT THIS WAY.
+
         row = 0
         while row < len(current_image):
             pixel = 0
